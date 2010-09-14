@@ -20,16 +20,33 @@ class Video(object):
         return "<Video object %s>" % dict(title=self.title, published=self.published, 
                                           viewCount=self.viewCount, url=self.url, rank=self.rank())
 
+    def daysOld(self):
+        return (datetime.today() - self.published).days
+
     def rank(self):
         "Compute how hot a video is. Borrowed from Hacker News' ranking formula."
-        daysOld = (datetime.today()-self.published).days
-
-        return (self.viewCount - 1.)/(daysOld+2.)**1.5
+        
+        return (self.viewCount - 1.)/(self.daysOld()+2.)**1.5
 
     @classmethod
     def rankVideos(self, videoList):
         return sorted(videoList, key=lambda video: video.rank(), reverse=True)
 
+    @classmethod
+    def createHTMLLinkList(self, videoList, path):
+        import codecs
+
+        file = codecs.open(path, mode='w', encoding='utf-8')
+
+        file.write("""<html><head><title>Link list for video list</title></head>
+<body><p>List generated on %s</p><ol>""" % datetime.now().ctime())
+
+        for video in videoList:
+            file.write(u'<li><a href="%s">%s</a> - %s views, %d days old</li>' % (video.url, video.title, video.viewCount, video.daysOld()))
+
+        file.write("</ol></body></html>")
+
+        file.close()
 class VideoFeedRetriever(object):
     @classmethod
     def fetchAndParseFeed(self, url):
@@ -93,3 +110,4 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
 
     videos = VideoFeedRetriever.getRankedEntriesFromChannel("thunderdome94")
+    Video.createHTMLLinkList(videos, "/Users/wkh/thunderdome94.html")
