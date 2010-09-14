@@ -3,3 +3,5 @@ This little script will grab the Atom feed entries for a YouTube channel and sor
      rank = (view count - 1)/(age in days + 2)**1.5
 
 At the moment all it does is spit out an HTML file as a console app. I might eventually convert it to a web app.
+
+[1] http://news.ycombinator.com/item?id=231209
