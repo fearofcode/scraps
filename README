@@ -1,4 +1,6 @@
-This little script will grab the Atom feed entries for a YouTube channel and sort them according to how "hot" they are, with old videos with a lot of views still staying pretty hot but also allowing cool new videos to rank highly. The ranking measure is borrowed from Hacker News' alleged ranking formula [1]. It is currently:
+This directory contains miscellaneous code that seems worthwile but is small and not undergoing further development.
+
+* videorank.py: This little script will grab the Atom feed entries for a YouTube channel and sort them according to how "hot" they are, with old videos with a lot of views still staying pretty hot but also allowing cool new videos to rank highly. The ranking measure is borrowed from Hacker News' alleged ranking formula [1]. It is currently:
 
      rank = (view count - 1)/(age in days + 2)**1.5
 
